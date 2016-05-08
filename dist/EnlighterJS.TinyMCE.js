@@ -59,7 +59,7 @@
             _tinymce.each(input, function (value, key) {
                 list.push({
                     text: key,
-                    value: key.toLowerCase()
+                    value: value.toLowerCase()
                 });
             });
         
