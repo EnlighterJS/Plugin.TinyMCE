@@ -1,0 +1,61 @@
+/**
+ * TinyMCE Editor Styles for use with Enlighter
+*/
+@font_sourcecode: "Source Code Pro", "Liberation Mono", "Courier New", Courier, monospace;
+@font_codeblock_title: "Open Sans", Arial, sans-serif;
+
+code.EnlighterJSRAW {
+    border: dotted 1px #e5e5e5;
+    border-left: solid 4px #23282d !important;
+    padding: 3px 5px 3px 5px;
+    background-color: #f7f7f7;
+    color: #565b60;
+    font-family: @font_sourcecode;
+}
+
+pre.EnlighterJSRAW {
+    border: dotted 1px #e5e5e5;
+    border-top-width: 0px;
+    padding: 5px 10px 5px 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #f7f7f7;
+    color: #565b60;
+    font-family: @font_sourcecode;
+    line-height: 1.4em;
+}
+
+/* Add Language Name */
+pre.EnlighterJSRAW:before {
+    font-family: @font_codeblock_title;
+    font-size: 13px !important;
+    display: block;
+    width: auto;
+    content: "Enlighter: generic";
+    padding: 5px;
+    margin: -5px -10px 10px -10px;
+    font-weight: bold;
+    background-color: #23282d;
+    color: #f0f0f0;
+}
+
+/* Enlighter Codeblock Toolbar */
+#EnlighterToolbar {
+    display: block;
+    position: absolute;
+    height: auto;
+
+    .editicon{
+        display: block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        cursor: pointer;
+        top: 35px;
+        right: 15px;
+        border-radius: 0px;
+        background-position: 0px 0px;
+        background-repeat: no-repeat;
+        background-image: data-uri('../assets/codeblock-edit-icon.png')
+    }
+}

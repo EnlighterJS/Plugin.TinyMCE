@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EnlighterJS TinyMCE Demo</title>
+
+    <script type="text/javascript">/* <![CDATA[ */
+    EnlighterJS_EditorConfig = {
+        "languages": {
+            "CSS (Cascading Style Sheets)": "css",
+            "HTML (Hypertext Markup Language)": "html",
+            "Java": "java",
+            "Javascript": "js",
+            "JSON": "json",
+            "Markdown": "md",
+            "PHP": "php",
+            "Python": "python",
+            "Ruby": "ruby",
+            "Shell Script": "shell",
+            "SQL": "sql",
+            "XML": "xml",
+            "C": "c",
+            "C++": "cpp",
+            "C#": "csharp",
+            "RUST": "rust",
+            "LUA": "lua",
+            "Matlab": "matlab",
+            "NSIS": "nsis",
+            "Diff": "diff",
+            "VHDL": "vhdl",
+            "Avr Assembly": "avrasm",
+            "Generic Assembly": "asm",
+            "Squirrel": "squirrel",
+            "Ini\/Conf Syntax": "ini",
+            "RAW Code": "raw",
+            "No Highlighting": "no-highlight",
+            "Generic Highlighting": "generic"
+        },
+        "themes": {
+            "WPCustom": "wpcustom",
+            "Enlighter": "enlighter",
+            "Godzilla": "godzilla",
+            "Beyond": "beyond",
+            "Classic": "classic",
+            "MooTwo": "mootwo",
+            "Eclipse": "eclipse",
+            "Droide": "droide",
+            "Minimal": "minimal",
+            "Atomic": "atomic",
+            "Rowhammer": "rowhammer",
+            "Git": "git",
+            "Mocha": "mocha",
+            "MooTools": "mootools",
+            "Panic": "panic",
+            "Tutti": "tutti",
+            "Twilight": "twilight"
+        },
+        "config": {
+            "theme": "wpcustom",
+            "language": "",
+            "linenumbers": true,
+            "indent": 2,
+            "quicktagMode": "html",
+            "languageShortcode": true
+        }
+    };
+    /* ]]> */</script>
+    <script type='text/javascript' src='http://wordpress.localnet/wp-includes/js/jquery/jquery.js?ver=1.12.3'></script>
+
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script type="text/javascript">
+
+        tinymce.init({
+
+            // paste plugin is required to strip pasted wysiwyg content (drop formats!)
+            plugins: 'paste',
+            external_plugins: {
+                'enlighterjs': '/dist/EnlighterJS.TinyMCE.js'
+            },
+
+            content_css: "/dist/EnlighterJS.TinyMCE.min.css",
+
+            selector: '#editor1',
+
+            menubar: false,
+            height: 1200,
+
+            toolbar: 'styleselect | bold italic | link image | pastetext | EnlighterInsert EnlighterEdit'
+        });
+
+    </script>
+</head>
+<body>
+
+<textarea id="editor1">Easy (and free!) You should check out our premium features.
+
+    <pre class="EnlighterJSRAW" data-enlighter-language="css">
+pre.EnlighterJSRAW {
+    border: dotted 1px #e5e5e5;
+    border-top-width: 0px;
+    padding: 5px 10px 5px 10px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    background-color: #f7f7f7;
+    color: #565b60;
+    font-family: @font_sourcecode;
+    font-size: 0.9em;
+    line-height: 1.4em;
+}
+
+/* Add Language Name */
+pre.EnlighterJSRAW:before {
+    font-family: @font_codeblock_title;
+    font-size: 13px !important;
+    display: block;
+    width: auto;
+    content: "Enlighter: generic";
+    padding: 5px;
+    margin: -5px -10px 10px -10px;
+    font-weight: bold;
+    background-color: #23282d;
+    color: #f0f0f0;
+}
+
+/* Enlighter Codeblock Toolbar */
+#EnlighterToolbar {
+    display: block;
+    position: absolute;
+    height: auto;
+
+    .editicon{
+        display: block;
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        cursor: pointer;
+        top: 35px;
+        right: 15px;
+        border-radius: 0px;
+        background-position: 0px 0px;
+        background-repeat: no-repeat;
+        background-image: data-uri('../assets/codeblock-edit-icon.png')
+    }
+}
+
+    </pre>
+
+</textarea>
+
+</body>
+</html>
