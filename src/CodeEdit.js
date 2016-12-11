@@ -9,6 +9,21 @@ var setCodeblockSettings = function(settings) {
         return;
     }
 
+    // get current mode
+    var currentMode = isEnlighterInlineCode(editor.selection.getNode()) ? 'inline' : 'block';
+
+    // node change block<>inline ?
+    if (settings.mode != currentMode){
+        // create new node
+        var newElement = editor.dom.create((settings.mode == 'block' ? 'pre' : 'code'), {
+            'class': 'EnlighterJSRAW'
+        });
+
+        // replace
+        editor.dom.replace(newElement, node, true);
+        node = newElement;
+    }
+
     // helper function
     var setAttb = (function (name) {
         if (settings[name]) {
@@ -45,7 +60,7 @@ var setCodeblockSettings = function(settings) {
 };
 
 // get the enlighter settings of the current selected node
-var getCodeblockSettings = function () {
+var getCodeblockSettings = function (inlineMode) {
 
     // get current node
     var node = editor.selection.getNode();
@@ -66,17 +81,17 @@ var getCodeblockSettings = function () {
         lineoffset: node.getAttribute('data-enlighter-lineoffset'),
         theme: node.getAttribute('data-enlighter-theme'),
         group: node.getAttribute('data-enlighter-group'),
-        title: node.getAttribute('data-enlighter-title')
+        title: node.getAttribute('data-enlighter-title'),
+        mode: inlineMode ? 'inline' : 'block'
     };
 };
 
 var codeEditAction = (function(){
-
-    // get the current node settings
-    var settings = getCodeblockSettings();
-
     // inline mode ?
     var inlineMode = isEnlighterInlineCode(editor.selection.getNode());
+
+    // get the current node settings
+    var settings = getCodeblockSettings(inlineMode);
 
     // open new oberlay window
     Dialog.open(code_edit_dialog(settings, inlineMode), function(e){
@@ -89,7 +104,8 @@ var codeEditAction = (function(){
             lineoffset: e.data.offset,
             theme: e.data.theme,
             title: e.data.title,
-            group: e.data.group
+            group: e.data.group,
+            mode: e.data.mode
         });
     });
 });

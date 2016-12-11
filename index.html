@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <title>EnlighterJS TinyMCE Demo</title>
 
+    <style type="text/css">
+        textarea{
+            display: block;
+            width: 100%;
+            min-height: 600px;
+            border: dotted 1px #505050;
+        }
+
+    </style>
+
     <script type="text/javascript">/* <![CDATA[ */
     EnlighterJS_EditorConfig = {
         "languages": {
@@ -65,15 +75,22 @@
         }
     };
     /* ]]> */</script>
-    <script type='text/javascript' src='http://wordpress.localnet/wp-includes/js/jquery/jquery.js?ver=1.12.3'></script>
-
+    <script type='text/javascript' src='//code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script type="text/javascript">
 
+        // toggle Visual Editor
+        jQuery(function(jq){
+            jq('#toggle_editor').on('click', function(){
+                tinymce.EditorManager.execCommand('mceToggleEditor', true, 'editor1');
+            })
+        });
+
+        // initialize TinyMCE
         tinymce.init({
 
             // paste plugin is required to strip pasted wysiwyg content (drop formats!)
-            plugins: 'paste',
+            plugins: 'paste codesample',
             external_plugins: {
                 'enlighterjs': '/dist/EnlighterJS.TinyMCE.js'
             },
@@ -92,58 +109,37 @@
 </head>
 <body>
 
-<textarea id="editor1">Easy (and free!) You should check out our premium features.
+<button type="button" id="toggle_editor">Toggle Editor</button>
 
-    <pre class="EnlighterJSRAW" data-enlighter-language="css">
-pre.EnlighterJSRAW {
-    border: dotted 1px #e5e5e5;
-    border-top-width: 0px;
-    padding: 5px 10px 5px 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    background-color: #f7f7f7;
-    color: #565b60;
-    font-family: @font_sourcecode;
-    font-size: 0.9em;
-    line-height: 1.4em;
-}
+<textarea id="editor1">Post and Edit Sourcecode in TinyMCE smoothly - Initially created as component of Enlighter Wordpress Plugin
 
-/* Add Language Name */
-pre.EnlighterJSRAW:before {
-    font-family: @font_codeblock_title;
-    font-size: 13px !important;
-    display: block;
-    width: auto;
-    content: "Enlighter: generic";
-    padding: 5px;
-    margin: -5px -10px 10px -10px;
-    font-weight: bold;
-    background-color: #23282d;
-    color: #f0f0f0;
-}
+<pre class="EnlighterJSRAW">
+// get the enlighter settings of the current selected node
+var getCodeblockSettings = function () {
 
-/* Enlighter Codeblock Toolbar */
-#EnlighterToolbar {
-    display: block;
-    position: absolute;
-    height: auto;
+    // get current node
+    var node = editor.selection.getNode();
 
-    .editicon{
-        display: block;
-        width: 32px;
-        height: 32px;
-        position: absolute;
-        cursor: pointer;
-        top: 35px;
-        right: 15px;
-        border-radius: 0px;
-        background-position: 0px 0px;
-        background-repeat: no-repeat;
-        background-image: data-uri('../assets/codeblock-edit-icon.png')
+    // enlighter element ?
+    if (!isEnlighterCode(node)) {
+        return {};
     }
-}
 
-    </pre>
+    // get linenumber attribute (null: not set | true/false)
+    var ln = node.getAttribute('data-enlighter-linenumbers');
+
+    // generate config
+    return {
+        language: node.getAttribute('data-enlighter-language'),
+        linenumbers: (ln == null ? _enlighterjs_config.config.linenumbers : (ln == 'true')),
+        highlight: node.getAttribute('data-enlighter-highlight'),
+        lineoffset: node.getAttribute('data-enlighter-lineoffset'),
+        theme: node.getAttribute('data-enlighter-theme'),
+        group: node.getAttribute('data-enlighter-group'),
+        title: node.getAttribute('data-enlighter-title')
+    };
+};
+</pre>
 
 </textarea>
 

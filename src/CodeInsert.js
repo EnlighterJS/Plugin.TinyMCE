@@ -1,6 +1,14 @@
 var codeInsertAction = function(){
 
-    Dialog.open(code_insert_dialog(), function(e){
+    // get dimensions
+    var editorDimensions = editor.dom.getViewPort();
+
+    // calculate dialog size
+    var dialogWidth = Math.min(editorDimensions.w, window.innerWidth) || 700;
+    var dialogHeight = Math.min(editorDimensions.h, window.innerHeight) || 500;
+
+    // create the dialog
+    Dialog.open(code_insert_dialog(dialogWidth, dialogHeight), function(e){
         // get code - replace windows style linebreaks
         var code = e.data.code.replace(/\r\n/gmi, '\n');
 

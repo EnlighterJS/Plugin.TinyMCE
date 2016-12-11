@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	ANT-based build script for EnlighterJS
+	
+	@author		Andi Dittrich <opensource _AT andidittrich _D_O_T d-e>
+	@version	1.9
+	@license	The MIT License (X11)
+	
+!-->
+<project name="EnlighterJS.TinyMCE" default="www-upload" basedir=".">
+    <!-- AN-contrib !-->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+    <!-- Release new Website Version !-->
+    <target name="www-upload">
+        <!-- Credentials, Host Settings !-->
+        <loadproperties srcFile=".credentials/account.conf" prefix="deploy" />
+
+        <!-- transfer deploy plugin !-->
+        <echo message="Uploading files" />
+
+        <scp todir="${deploy.user}@${deploy.host}:${deploy.path}" trust="true" port="${deploy.port}" keyfile="${user.home}/${deploy.keyfile}" passphrase="${deploy.keyfile.passphrase}">
+            <fileset dir=".">
+                <include name="dist/*"/>
+                <include name="index.html"/>
+            </fileset>
+        </scp>
+    </target>
+	
+</project>

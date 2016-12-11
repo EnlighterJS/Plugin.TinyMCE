@@ -1,7 +1,11 @@
-var code_insert_dialog = function () {
+var code_insert_dialog = function(_width, _height) {
     return {
         title: 'Enlighter Code Insert',
-        minWidth: 700,
+        layout: 'flex',
+        direction: 'column',
+        align: 'stretch',
+        width: _width - 50,
+        height: _height - 150,
         body: [
             {
                 type: 'listbox',
@@ -38,10 +42,12 @@ var code_insert_dialog = function () {
             {
                 type: 'textbox',
                 name: 'code',
-                label: 'Sourcecode',
+                flex: 1,
                 multiline: true,
-                minHeight: 200,
-                style: 'direction: ltr; text-align: left'
+                spellcheck: false,
+                style: 'direction: ltr; text-align: left',
+                classes: 'monospace',
+                autofocus: true
             }
         ]
     }

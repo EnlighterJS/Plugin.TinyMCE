@@ -4,6 +4,17 @@ var code_edit_dialog = function(settings, inlineMode){
         minWidth : 700,
         body : [
             {
+                type: 'listbox',
+                name: 'mode',
+                label: 'Mode',
+                values: [
+                    {text: 'Block-Code', value: 'block'},
+                    {text: 'Inline-Code', value: 'inline'}
+                ],
+                value: settings.mode,
+                style: 'direction: ltr; text-align: left'
+            },
+            {
                 type : 'listbox',
                 name : 'language',
                 label : 'Language',

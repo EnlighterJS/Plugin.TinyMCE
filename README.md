@@ -5,6 +5,11 @@ EnlighterJS TinyMCE Plugin
 
 ![Screenshot](https://raw.githubusercontent.com/AndiDittrich/EnlighterJS.TinyMCE/master/screenshot1.png)
 
+Demo
+-------------------------------------------------
+
+[Click here](https://tinymce.enlighterjs.org) to view the plugin demo
+
 Usage
 -------------------------------------------------
 

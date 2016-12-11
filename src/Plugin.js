@@ -47,7 +47,6 @@
         // Load Modules
         //=require CodeInsert.js
         //=require CodeEdit.js
-        //=require CodeInsert.js
 
         // is a enlighter node (pre element) selected/focused ?
         var enlighterNodeActive = false;

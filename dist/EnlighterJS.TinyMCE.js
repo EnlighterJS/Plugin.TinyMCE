@@ -1,4 +1,4 @@
-/*! EnlighterJS TinyMCE Plugin 3.1.0 | The MIT License (X11) | http://enlighterjs.org */
+/*! EnlighterJS TinyMCE Plugin 3.2.0 | The MIT License (X11) | https://tinymce.enlighterjs.org */
 (function(){
     'use strict';
 
@@ -139,6 +139,17 @@
                 minWidth : 700,
                 body : [
                     {
+                        type: 'listbox',
+                        name: 'mode',
+                        label: 'Mode',
+                        values: [
+                            {text: 'Block-Code', value: 'block'},
+                            {text: 'Inline-Code', value: 'inline'}
+                        ],
+                        value: settings.mode,
+                        style: 'direction: ltr; text-align: left'
+                    },
+                    {
                         type : 'listbox',
                         name : 'language',
                         label : 'Language',
@@ -200,10 +211,14 @@
                 ]
             }
         };
-                var code_insert_dialog = function () {
+                var code_insert_dialog = function(_width, _height) {
             return {
                 title: 'Enlighter Code Insert',
-                minWidth: 700,
+                layout: 'flex',
+                direction: 'column',
+                align: 'stretch',
+                width: _width - 50,
+                height: _height - 150,
                 body: [
                     {
                         type: 'listbox',
@@ -240,10 +255,12 @@
                     {
                         type: 'textbox',
                         name: 'code',
-                        label: 'Sourcecode',
+                        flex: 1,
                         multiline: true,
-                        minHeight: 200,
-                        style: 'direction: ltr; text-align: left'
+                        spellcheck: false,
+                        style: 'direction: ltr; text-align: left',
+                        classes: 'monospace',
+                        autofocus: true
                     }
                 ]
             }
@@ -252,7 +269,15 @@
         // Load Modules
         var codeInsertAction = function(){
         
-            Dialog.open(code_insert_dialog(), function(e){
+            // get dimensions
+            var editorDimensions = editor.dom.getViewPort();
+        
+            // calculate dialog size
+            var dialogWidth = Math.min(editorDimensions.w, window.innerWidth) || 700;
+            var dialogHeight = Math.min(editorDimensions.h, window.innerHeight) || 500;
+        
+            // create the dialog
+            Dialog.open(code_insert_dialog(dialogWidth, dialogHeight), function(e){
                 // get code - replace windows style linebreaks
                 var code = e.data.code.replace(/\r\n/gmi, '\n');
         
@@ -318,6 +343,21 @@
                 return;
             }
         
+            // get current mode
+            var currentMode = isEnlighterInlineCode(editor.selection.getNode()) ? 'inline' : 'block';
+        
+            // node change block<>inline ?
+            if (settings.mode != currentMode){
+                // create new node
+                var newElement = editor.dom.create((settings.mode == 'block' ? 'pre' : 'code'), {
+                    'class': 'EnlighterJSRAW'
+                });
+        
+                // replace
+                editor.dom.replace(newElement, node, true);
+                node = newElement;
+            }
+        
             // helper function
             var setAttb = (function (name) {
                 if (settings[name]) {
@@ -354,7 +394,7 @@
         };
         
         // get the enlighter settings of the current selected node
-        var getCodeblockSettings = function () {
+        var getCodeblockSettings = function (inlineMode) {
         
             // get current node
             var node = editor.selection.getNode();
@@ -375,17 +415,17 @@
                 lineoffset: node.getAttribute('data-enlighter-lineoffset'),
                 theme: node.getAttribute('data-enlighter-theme'),
                 group: node.getAttribute('data-enlighter-group'),
-                title: node.getAttribute('data-enlighter-title')
+                title: node.getAttribute('data-enlighter-title'),
+                mode: inlineMode ? 'inline' : 'block'
             };
         };
         
         var codeEditAction = (function(){
-        
-            // get the current node settings
-            var settings = getCodeblockSettings();
-        
             // inline mode ?
             var inlineMode = isEnlighterInlineCode(editor.selection.getNode());
+        
+            // get the current node settings
+            var settings = getCodeblockSettings(inlineMode);
         
             // open new oberlay window
             Dialog.open(code_edit_dialog(settings, inlineMode), function(e){
@@ -398,11 +438,11 @@
                     lineoffset: e.data.offset,
                     theme: e.data.theme,
                     title: e.data.title,
-                    group: e.data.group
+                    group: e.data.group,
+                    mode: e.data.mode
                 });
             });
         });
-        //=require CodeInsert.js
 
         // is a enlighter node (pre element) selected/focused ?
         var enlighterNodeActive = false;

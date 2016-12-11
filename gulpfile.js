@@ -15,7 +15,7 @@ var include = require("gulp-include");
 var path = require('path');
 
 // license header prepended to builds
-var licenseHeader = '/*! EnlighterJS TinyMCE Plugin [[VERSION]] | The MIT License (X11) | http://enlighterjs.org */\n';
+var licenseHeader = '/*! EnlighterJS TinyMCE Plugin [[VERSION]] | The MIT License (X11) | https://tinymce.enlighterjs.org */\n';
 
 // default
 gulp.task('default', ['browser-js', 'less']);

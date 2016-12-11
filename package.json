@@ -1,6 +1,6 @@
 {
   "name": "enlighterjs-tinymce",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "browser-side require() the node way",
   "browser": "EnlighterJS.TinyMCE.js",
   "devDependencies": {
