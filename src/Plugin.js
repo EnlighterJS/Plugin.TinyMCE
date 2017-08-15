@@ -125,8 +125,10 @@
 
             onclick: codeEditAction
         });
-    };
 
+        // Additional Plugins
+        //=require TabIndent.js
+    };
 
     // register plugin
     _tinymce.PluginManager.add('enlighterjs', plugin);

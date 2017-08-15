@@ -8,12 +8,12 @@
 	@license	The MIT License (X11)
 	
 !-->
-<project name="EnlighterJS.TinyMCE" default="www-upload" basedir=".">
+<project name="EnlighterJS.TinyMCE" basedir=".">
     <!-- AN-contrib !-->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
 
     <!-- Release new Website Version !-->
-    <target name="www-upload">
+    <target name="release">
         <!-- Credentials, Host Settings !-->
         <loadproperties srcFile=".credentials/account.conf" prefix="deploy" />
 

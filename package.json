@@ -1,12 +1,13 @@
 {
   "name": "enlighterjs-tinymce",
-  "version": "3.2.0",
-  "description": "browser-side require() the node way",
+  "version": "3.3.0",
+  "description": "Official EnlighterJS Plugin for TinyMCE4 WYSIWYG Editor",
   "browser": "EnlighterJS.TinyMCE.js",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat-util": "^0.5.5",
     "gulp-filter": "^4.0.0",
+    "gulp-include": "^2.3.1",
     "gulp-less": "^3.1.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-prettyerror": "^1.0.2",
