@@ -33,71 +33,63 @@ if (_enlighterjs_config.config.tabIndentation === true && tabindent !== null){
         // get internal w3c compliant range object
         var rng = editor.selection.getRng(true);
 
-        // pure cursor without selection ? just add indent
-        if (rng.startOffset === rng.endOffset && !e.shiftKey){
-            // insert indentation
-            editor.insertContent(tabindent.replace(/\s/g, '&nbsp;'));
+        // get selected node (text container)
+        var node = editor.selection.getNode();
+        
+        // extract original text
+        var nodeContent = node.textContent;
 
-        // selection - extract lines
-        }else{
-            // get selected node (text container)
-            var node = editor.selection.getNode();
+        // count num lines
+        var startLine = nodeContent.substring(0, rng.startOffset).split('\n').length-1;
+        var stopLine = nodeContent.substring(0, rng.endOffset).split('\n').length-1;
 
-            // extract original text
-            var nodeContent = node.textContent;
+        // count block size for selection (total lines)
+        var startBlockOffset = nodeContent.substring(0, rng.startOffset).lastIndexOf('\n') + 1;
 
-            // count num lines
-            var startLine = nodeContent.substring(0, rng.startOffset).split('\n').length-1;
-            var stopLine = nodeContent.substring(0, rng.endOffset).split('\n').length-1;
+        // split into lines
+        var lines = nodeContent.split('\n');
 
-            // count block size for selection (total lines)
-            var startBlockOffset = nodeContent.substring(0, rng.startOffset).lastIndexOf('\n') + 1;
+        // new blocksize (for selection)
+        var blocksize = 0;
 
-            // split into lines
-            var lines = nodeContent.split('\n');
+        // reverse mode ? remove indentation of selection
+        if (e.shiftKey){
 
-            // new blocksize (for selection)
-            var blocksize = 0;
+            // remove indentation
+            for (var i=startLine;i<=stopLine;i++){
+                // count num spaces
+                var numSpaces = lines[i].replace(/^(\s*).*?$/, '$1').length;
 
-            // reverse mode ? remove indentation of selection
-            if (e.shiftKey){
+                // only delete whitespaces
+                var deleteSpaces = Math.min(numSpaces, numTabIndent);
 
-                // remove indentation
-                for (var i=startLine;i<=stopLine;i++){
-                    // count num spaces
-                    var numSpaces = lines[i].replace(/^(\s*).*?$/, '$1').length;
+                // remove leading indentation
+                var newLine = lines[i].substr(deleteSpaces);
+                lines[i] = newLine;
 
-                    // only delete whitespaces
-                    var deleteSpaces = Math.min(numSpaces, numTabIndent);
-
-                    // remove leading indentation
-                    var newLine = lines[i].substr(deleteSpaces);
-                    lines[i] = newLine;
-
-                    // count + linebreak
-                    blocksize += newLine.length + 1;
-                }
-            
-            // normal mode
-            }else{
-
-                // inject indentation
-                for (var i=startLine;i<=stopLine;i++){
-                    var newLine = tabindent + lines[i];
-                    lines[i] = newLine;
-
-                    // count + linebreak
-                    blocksize += newLine.length + 1;
-                }
+                // count + linebreak
+                blocksize += newLine.length + 1;
             }
+        
+        // normal mode
+        }else{
 
-            // modify content
-            node.textContent = lines.join('\n');
+            // inject indentation
+            for (var i=startLine;i<=stopLine;i++){
+                var newLine = tabindent + lines[i];
+                lines[i] = newLine;
 
-            // new selection range
-            rng.setStart(node.firstChild, startBlockOffset);
-            rng.setEnd(node.firstChild, startBlockOffset + blocksize - 1);
-            editor.selection.setRng(rng);
+                // count + linebreak
+                blocksize += newLine.length + 1;
+            }
         }
+
+        // modify content
+        node.textContent = lines.join('\n');
+
+        // new selection range
+        rng.setStart(node.firstChild, startBlockOffset);
+        rng.setEnd(node.firstChild, startBlockOffset + blocksize - 1);
+        editor.selection.setRng(rng);
     });
 }

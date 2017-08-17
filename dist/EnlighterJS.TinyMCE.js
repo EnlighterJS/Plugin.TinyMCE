@@ -558,15 +558,19 @@
                 // get internal w3c compliant range object
                 var rng = editor.selection.getRng(true);
         
+                // get selected node (text container)
+                var node = editor.selection.getNode();
+        
                 // pure cursor without selection ? just add indent
-                if (rng.startOffset === rng.endOffset && !e.shiftKey){
+                if (false && rng.startOffset === rng.endOffset && !e.shiftKey){
                     // insert indentation
-                    editor.insertContent(tabindent.replace(/\s/g, '&nbsp;'));
+                    //editor.insertContent(tabindent.replace(/\s/g, '&nbsp;'));
+        
+                    // reselect cursor
+                    //editor.selection.setCursorLocation(node, rng.startOffset+2);
         
                 // selection - extract lines
                 }else{
-                    // get selected node (text container)
-                    var node = editor.selection.getNode();
         
                     // extract original text
                     var nodeContent = node.textContent;
