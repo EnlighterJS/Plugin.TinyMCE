@@ -1,6 +1,6 @@
 var code_insert_dialog = function(_width, _height) {
     return {
-        title: 'Enlighter Code Insert',
+        title: 'Code Insert - EnlighterJS Syntax Highlighter',
         layout: 'flex',
         direction: 'column',
         align: 'stretch',

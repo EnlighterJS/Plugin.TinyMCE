@@ -106,7 +106,7 @@
 
         // Add Code Insert Button to toolbar
         editor.addButton('EnlighterInsert', {
-            title : 'Enlighter Code Insert',
+            title : 'Code Insert',
             image : url + '/code-insert-icon.png',
 
             onclick: codeInsertAction
@@ -114,7 +114,7 @@
 
         // Add Code Edit Button to toolbar
         editor.addButton('EnlighterEdit', {
-            title: 'Enlighter Code Settings',
+            title: 'Code Settings',
             disabled: true,
             image: url + '/code-edit-icon.png',
 

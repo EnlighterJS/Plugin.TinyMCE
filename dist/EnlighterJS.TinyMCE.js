@@ -1,4 +1,4 @@
-/*! EnlighterJS TinyMCE Plugin 3.3.0 | The MIT License (X11) | https://tinymce.enlighterjs.org */
+/*! EnlighterJS TinyMCE Plugin 3.4.0 | The MIT License (X11) | https://tinymce.enlighterjs.org */
 (function(){
     'use strict';
 
@@ -135,7 +135,7 @@
         // Load Views
         var code_edit_dialog = function(settings, inlineMode){
             return {
-                title : 'Enlighter Code Settings',
+                title : 'Code Settings - EnlighterJS Syntax Highlighter',
                 minWidth : 700,
                 body : [
                     {
@@ -213,7 +213,7 @@
         };
                 var code_insert_dialog = function(_width, _height) {
             return {
-                title: 'Enlighter Code Insert',
+                title: 'Code Insert - EnlighterJS Syntax Highlighter',
                 layout: 'flex',
                 direction: 'column',
                 align: 'stretch',
@@ -333,10 +333,7 @@
             });
         };
         // set the enlighter settings of the current node
-        var setCodeblockSettings = function(settings) {
-        
-            // get current node
-            var node = editor.selection.getNode();
+        var setCodeblockSettings = function(node, settings) {
         
             // enlighter element ?
             if (!isEnlighterCode(node)) {
@@ -394,10 +391,7 @@
         };
         
         // get the enlighter settings of the current selected node
-        var getCodeblockSettings = function (inlineMode) {
-        
-            // get current node
-            var node = editor.selection.getNode();
+        var getCodeblockSettings = function (node, inlineMode) {
         
             // enlighter element ?
             if (!isEnlighterCode(node)) {
@@ -421,17 +415,20 @@
         };
         
         var codeEditAction = (function(){
+            // get current node
+            var node = editor.selection.getNode();
+            
             // inline mode ?
-            var inlineMode = isEnlighterInlineCode(editor.selection.getNode());
+            var inlineMode = isEnlighterInlineCode(node);
         
             // get the current node settings
-            var settings = getCodeblockSettings(inlineMode);
+            var settings = getCodeblockSettings(node, inlineMode);
         
             // open new oberlay window
             Dialog.open(code_edit_dialog(settings, inlineMode), function(e){
         
                 // apply the enlighter specific node attributes to the current selected node
-                setCodeblockSettings({
+                setCodeblockSettings(node, {
                     language: e.data.language,
                     linenumbers: e.data.linenums,
                     highlight: e.data.highlight,
@@ -502,7 +499,7 @@
 
         // Add Code Insert Button to toolbar
         editor.addButton('EnlighterInsert', {
-            title : 'Enlighter Code Insert',
+            title : 'Code Insert',
             image : url + '/code-insert-icon.png',
 
             onclick: codeInsertAction
@@ -510,7 +507,7 @@
 
         // Add Code Edit Button to toolbar
         editor.addButton('EnlighterEdit', {
-            title: 'Enlighter Code Settings',
+            title: 'Code Settings',
             disabled: true,
             image: url + '/code-edit-icon.png',
 
@@ -560,74 +557,62 @@
         
                 // get selected node (text container)
                 var node = editor.selection.getNode();
+                
+                // extract original text
+                var nodeContent = node.textContent;
         
-                // pure cursor without selection ? just add indent
-                if (false && rng.startOffset === rng.endOffset && !e.shiftKey){
-                    // insert indentation
-                    //editor.insertContent(tabindent.replace(/\s/g, '&nbsp;'));
+                // count num lines
+                var startLine = nodeContent.substring(0, rng.startOffset).split('\n').length-1;
+                var stopLine = nodeContent.substring(0, rng.endOffset).split('\n').length-1;
         
-                    // reselect cursor
-                    //editor.selection.setCursorLocation(node, rng.startOffset+2);
+                // count block size for selection (total lines)
+                var startBlockOffset = nodeContent.substring(0, rng.startOffset).lastIndexOf('\n') + 1;
         
-                // selection - extract lines
+                // split into lines
+                var lines = nodeContent.split('\n');
+        
+                // new blocksize (for selection)
+                var blocksize = 0;
+        
+                // reverse mode ? remove indentation of selection
+                if (e.shiftKey){
+        
+                    // remove indentation
+                    for (var i=startLine;i<=stopLine;i++){
+                        // count num spaces
+                        var numSpaces = lines[i].replace(/^(\s*).*?$/, '$1').length;
+        
+                        // only delete whitespaces
+                        var deleteSpaces = Math.min(numSpaces, numTabIndent);
+        
+                        // remove leading indentation
+                        var newLine = lines[i].substr(deleteSpaces);
+                        lines[i] = newLine;
+        
+                        // count + linebreak
+                        blocksize += newLine.length + 1;
+                    }
+                
+                // normal mode
                 }else{
         
-                    // extract original text
-                    var nodeContent = node.textContent;
+                    // inject indentation
+                    for (var i=startLine;i<=stopLine;i++){
+                        var newLine = tabindent + lines[i];
+                        lines[i] = newLine;
         
-                    // count num lines
-                    var startLine = nodeContent.substring(0, rng.startOffset).split('\n').length-1;
-                    var stopLine = nodeContent.substring(0, rng.endOffset).split('\n').length-1;
-        
-                    // count block size for selection (total lines)
-                    var startBlockOffset = nodeContent.substring(0, rng.startOffset).lastIndexOf('\n') + 1;
-        
-                    // split into lines
-                    var lines = nodeContent.split('\n');
-        
-                    // new blocksize (for selection)
-                    var blocksize = 0;
-        
-                    // reverse mode ? remove indentation of selection
-                    if (e.shiftKey){
-        
-                        // remove indentation
-                        for (var i=startLine;i<=stopLine;i++){
-                            // count num spaces
-                            var numSpaces = lines[i].replace(/^(\s*).*?$/, '$1').length;
-        
-                            // only delete whitespaces
-                            var deleteSpaces = Math.min(numSpaces, numTabIndent);
-        
-                            // remove leading indentation
-                            var newLine = lines[i].substr(deleteSpaces);
-                            lines[i] = newLine;
-        
-                            // count + linebreak
-                            blocksize += newLine.length + 1;
-                        }
-                    
-                    // normal mode
-                    }else{
-        
-                        // inject indentation
-                        for (var i=startLine;i<=stopLine;i++){
-                            var newLine = tabindent + lines[i];
-                            lines[i] = newLine;
-        
-                            // count + linebreak
-                            blocksize += newLine.length + 1;
-                        }
+                        // count + linebreak
+                        blocksize += newLine.length + 1;
                     }
-        
-                    // modify content
-                    node.textContent = lines.join('\n');
-        
-                    // new selection range
-                    rng.setStart(node.firstChild, startBlockOffset);
-                    rng.setEnd(node.firstChild, startBlockOffset + blocksize - 1);
-                    editor.selection.setRng(rng);
                 }
+        
+                // modify content
+                node.textContent = lines.join('\n');
+        
+                // new selection range
+                rng.setStart(node.firstChild, startBlockOffset);
+                rng.setEnd(node.firstChild, startBlockOffset + blocksize - 1);
+                editor.selection.setRng(rng);
             });
         }
         

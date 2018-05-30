@@ -1,6 +1,6 @@
 var code_edit_dialog = function(settings, inlineMode){
     return {
-        title : 'Enlighter Code Settings',
+        title : 'Code Settings - EnlighterJS Syntax Highlighter',
         minWidth : 700,
         body : [
             {

@@ -1,8 +1,5 @@
 // set the enlighter settings of the current node
-var setCodeblockSettings = function(settings) {
-
-    // get current node
-    var node = editor.selection.getNode();
+var setCodeblockSettings = function(node, settings) {
 
     // enlighter element ?
     if (!isEnlighterCode(node)) {
@@ -60,10 +57,7 @@ var setCodeblockSettings = function(settings) {
 };
 
 // get the enlighter settings of the current selected node
-var getCodeblockSettings = function (inlineMode) {
-
-    // get current node
-    var node = editor.selection.getNode();
+var getCodeblockSettings = function (node, inlineMode) {
 
     // enlighter element ?
     if (!isEnlighterCode(node)) {
@@ -87,17 +81,20 @@ var getCodeblockSettings = function (inlineMode) {
 };
 
 var codeEditAction = (function(){
+    // get current node
+    var node = editor.selection.getNode();
+    
     // inline mode ?
-    var inlineMode = isEnlighterInlineCode(editor.selection.getNode());
+    var inlineMode = isEnlighterInlineCode(node);
 
     // get the current node settings
-    var settings = getCodeblockSettings(inlineMode);
+    var settings = getCodeblockSettings(node, inlineMode);
 
     // open new oberlay window
     Dialog.open(code_edit_dialog(settings, inlineMode), function(e){
 
         // apply the enlighter specific node attributes to the current selected node
-        setCodeblockSettings({
+        setCodeblockSettings(node, {
             language: e.data.language,
             linenumbers: e.data.linenums,
             highlight: e.data.highlight,

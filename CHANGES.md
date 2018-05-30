@@ -1,3 +1,10 @@
+### 3.4.0 ###
+
+* Added: EnlighterJS label to codeblocks (bottom-right)
+* Changed: Renamed the toolbar-button labels (`Code Insert`, `Code Settings`) - requested by [w3215 on WordPress.org Forums](https://wordpress.org/support/topic/remove-branding-on-toolbar/)
+* Changed: Renamed the dialog window titles - requested by [w3215 on WordPress.org Forums](https://wordpress.org/support/topic/remove-branding-on-toolbar/)
+* Bugfix: code edit button on codeblocks was broken (settings not saved) - thanks to [Sarah1101 on GitHub](https://github.com/EnlighterJS/Plugin.WordPress/issues/101)
+
 ### 3.3 ###
 * Added: Tab-Indentation mode to align text within a codeblock
 
