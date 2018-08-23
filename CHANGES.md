@@ -1,3 +1,8 @@
+### 3.5.0 ###
+
+* Added: keyboard shortcut `+x` to highlight code - requested by [dahnark on WordPress.org Forums](https://wordpress.org/support/topic/override-theme-code-style/)
+* License changed to Mozilla Public License 2.0
+
 ### 3.4.0 ###
 
 * Added: EnlighterJS label to codeblocks (bottom-right)

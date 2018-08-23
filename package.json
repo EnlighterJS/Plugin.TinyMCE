@@ -1,8 +1,10 @@
 {
   "name": "enlighterjs-tinymce",
-  "version": "3.4.0",
+  "version": "3.5.0",
+  "private": true,
   "description": "Official EnlighterJS Plugin for TinyMCE4 WYSIWYG Editor",
   "browser": "./dist/EnlighterJS.TinyMCE.js",
+  "license": "MPL-2.0",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat-util": "^0.5.5",

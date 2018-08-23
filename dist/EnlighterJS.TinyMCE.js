@@ -1,4 +1,4 @@
-/*! EnlighterJS TinyMCE Plugin 3.4.0 | The MIT License (X11) | https://tinymce.enlighterjs.org */
+/*! EnlighterJS TinyMCE Plugin 3.5.0 | The MIT License (X11) | https://tinymce.enlighterjs.org */
 (function(){
     'use strict';
 
@@ -518,6 +518,29 @@
 
             onclick: codeEditAction
         });
+
+        // shortcuts enabled ?
+        if (_enlighterjs_config.config.shortcuts === true){
+            // register additional formats
+            editor.on('init', function() {
+                // remove 3rd party shoutcuts
+                editor.shortcuts.remove('access+x');
+
+                // code shortcut ctrl+alt+x (WordPress like)
+                editor.shortcuts.add('access+x', 'Enlighter inline code', function(){
+                    editor.formatter.toggle('enlighterjs_inlinecode');
+                });
+
+                // register new formatting
+                editor.formatter.register('enlighterjs_inlinecode', {
+                    inline: 'code',
+                    classes: 'EnlighterJSRAW',
+                    attributes: {
+                        'data-enlighter-language' : 'generic'
+                    }
+                });
+            });
+        }
 
         // Additional Plugins
         // generate indentation
