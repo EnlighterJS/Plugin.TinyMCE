@@ -1,4 +1,4 @@
-/*! EnlighterJS TinyMCE Plugin 3.5.0 | The MIT License (X11) | https://tinymce.enlighterjs.org */
+/*! EnlighterJS TinyMCE Plugin 3.5.1 | The MIT License (X11) | https://tinymce.enlighterjs.org */
 (function(){
     'use strict';
 

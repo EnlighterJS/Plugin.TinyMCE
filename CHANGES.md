@@ -1,3 +1,7 @@
+### 3.5.1 ###
+
+* Bugfix: footer label may collide with editor content - added additional padding - thanks to [JavierSegoviaCordoba on GitHub](https://github.com/EnlighterJS/Plugin.WordPress/issues/120)
+
 ### 3.5.0 ###
 
 * Added: keyboard shortcut `+x` to highlight code - requested by [dahnark on WordPress.org Forums](https://wordpress.org/support/topic/override-theme-code-style/)
