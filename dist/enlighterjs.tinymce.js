@@ -526,7 +526,7 @@
         });
 
         // shortcuts enabled ?
-        if (_enlighterjs_config.config.shortcuts === true){
+        if (_enlighterjs_config.tinymce.keyboardShortcuts === true){
             // register additional formats
             editor.on('init', function() {
                 // remove 3rd party shoutcuts
@@ -554,7 +554,7 @@
         var tabindent = (numTabIndent > 0 ? (new Array(numTabIndent+1)).join(' ') : null);
         
         // tab indentation within codeblocks enabled ?
-        if (_enlighterjs_config.config.tabIndentation === true && tabindent !== null){
+        if (_enlighterjs_config.tinymce.tabIndentation === true && tabindent !== null){
         
             // cancel default tab action
             editor.on('KeyUp', function(e){
