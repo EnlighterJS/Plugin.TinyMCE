@@ -3,7 +3,7 @@ var numTabIndent = _enlighterjs_config.config.indent;
 var tabindent = (numTabIndent > 0 ? (new Array(numTabIndent+1)).join(' ') : null);
 
 // tab indentation within codeblocks enabled ?
-if (_enlighterjs_config.config.tabIndentation === true && tabindent !== null){
+if (_enlighterjs_config.tinymce.tabIndentation === true && tabindent !== null){
 
     // cancel default tab action
     editor.on('KeyUp', function(e){

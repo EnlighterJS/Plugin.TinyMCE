@@ -127,7 +127,7 @@
         });
 
         // shortcuts enabled ?
-        if (_enlighterjs_config.config.shortcuts === true){
+        if (_enlighterjs_config.tinymce.keyboardShortcuts === true){
             // register additional formats
             editor.on('init', function() {
                 // remove 3rd party shoutcuts
