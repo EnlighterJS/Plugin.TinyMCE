@@ -1,3 +1,9 @@
+### 4.0.0 ###
+
+* Changed: renamed plugin files (lowercase)
+* Changed: swapped key/value pairs of select lists to be compatible with Enlighter v4
+* Removed: default language setting - language parameter has to be explicit set for each codeblock
+
 ### 3.5.1 ###
 
 * Bugfix: footer label may collide with editor content - added additional padding - thanks to [JavierSegoviaCordoba on GitHub](https://github.com/EnlighterJS/Plugin.WordPress/issues/120)

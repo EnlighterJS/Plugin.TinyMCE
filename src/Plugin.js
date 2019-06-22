@@ -32,10 +32,10 @@
         //=require Util.js
 
         // generate language list values
-        var _languageList = toSelectList(_enlighterjs_config.languages);
+        var _languageList = toSelectList(_enlighterjs_config.languages, null);
 
         // generate theme values
-        var _themeList = toSelectList(_enlighterjs_config.themes);
+        var _themeList = toSelectList(_enlighterjs_config.themes, _enlighterjs_config.config.theme);
 
         // EnlighterJS Editor Plugin
         //=require Dialog.js

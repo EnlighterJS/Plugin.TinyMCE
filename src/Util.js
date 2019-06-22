@@ -17,17 +17,23 @@ var isEnlighterCode = function(node){
 };
 
 // generate key/value list from object for TinyMCE select-box
-var toSelectList = (function(input){
+var toSelectList = (function(input, defaultEntry){
     // base entry
-    var list = [{
-        text: 'Default (Global-Settings)',
-        value: null
-    }];
+    var list = [];
 
+    // add default entry ?
+    if (defaultEntry !== null){
+        list.push({
+            text: 'Standard (' + defaultEntry + ')',
+            value: null
+        });
+    }
+
+    // add key/value pairs
     _tinymce.each(input, function (value, key) {
         list.push({
-            text: key,
-            value: value.toLowerCase()
+            text: value,
+            value: key
         });
     });
 

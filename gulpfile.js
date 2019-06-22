@@ -15,7 +15,7 @@ var include = require("gulp-include");
 var path = require('path');
 
 // license header prepended to builds
-var licenseHeader = '/*! EnlighterJS TinyMCE Plugin [[VERSION]] | The MIT License (X11) | https://tinymce.enlighterjs.org */\n';
+var licenseHeader = '/*! EnlighterJS TinyMCE Plugin [[VERSION]] | Mozilla Public License 2.0 | https://tinymce.enlighterjs.org */\n';
 
 // default
 gulp.task('default', ['browser-js', 'less']);
@@ -29,7 +29,7 @@ gulp.task('browser-js', function(){
         .pipe(include())
 
         // rename file
-        .pipe(rename('EnlighterJS.TinyMCE.js'))
+        .pipe(rename('enlighterjs.tinymce.js'))
 
         // add function wrapper and license header
         .pipe(wrapper({
@@ -60,7 +60,7 @@ gulp.task('less', function () {
 
         .pipe(less())
         .pipe(minifyCSS())
-        .pipe(concat('EnlighterJS.TinyMCE.min.css'))
+        .pipe(concat('enlighterjs.tinymce.min.css'))
 
         // add license header
         .pipe(wrapper({

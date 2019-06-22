@@ -1,4 +1,4 @@
-/*! EnlighterJS TinyMCE Plugin 3.5.1 | The MIT License (X11) | https://tinymce.enlighterjs.org */
+/*! EnlighterJS TinyMCE Plugin 4.0.0 | Mozilla Public License 2.0 | https://tinymce.enlighterjs.org */
 (function(){
     'use strict';
 
@@ -49,17 +49,23 @@
         };
         
         // generate key/value list from object for TinyMCE select-box
-        var toSelectList = (function(input){
+        var toSelectList = (function(input, defaultEntry){
             // base entry
-            var list = [{
-                text: 'Default (Global-Settings)',
-                value: null
-            }];
+            var list = [];
         
+            // add default entry ?
+            if (defaultEntry !== null){
+                list.push({
+                    text: 'Standard (' + defaultEntry + ')',
+                    value: null
+                });
+            }
+        
+            // add key/value pairs
             _tinymce.each(input, function (value, key) {
                 list.push({
-                    text: key,
-                    value: value.toLowerCase()
+                    text: value,
+                    value: key
                 });
             });
         
@@ -67,10 +73,10 @@
         });
 
         // generate language list values
-        var _languageList = toSelectList(_enlighterjs_config.languages);
+        var _languageList = toSelectList(_enlighterjs_config.languages, null);
 
         // generate theme values
-        var _themeList = toSelectList(_enlighterjs_config.themes);
+        var _themeList = toSelectList(_enlighterjs_config.themes, _enlighterjs_config.config.theme);
 
         // EnlighterJS Editor Plugin
         var Dialog = {
