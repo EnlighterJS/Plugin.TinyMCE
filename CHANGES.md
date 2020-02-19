@@ -1,3 +1,8 @@
+### 5.0.0 ###
+
+* Added: development mode via koa/koa-static
+* Added: codeblock delete icon - feature requested [on GitHub](https://github.com/EnlighterJS/Plugin.TinyMCE/issues/4)
+
 ### 4.0.0 ###
 
 * Changed: renamed plugin files (lowercase)

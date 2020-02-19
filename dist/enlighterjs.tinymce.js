@@ -1,4 +1,4 @@
-/*! EnlighterJS TinyMCE Plugin 4.0.0 | Mozilla Public License 2.0 | https://tinymce.enlighterjs.org */
+/*! EnlighterJS TinyMCE Plugin 5.0.0 | Mozilla Public License 2.0 | https://tinymce.enlighterjs.org */
 (function(){
     'use strict';
 
@@ -102,18 +102,43 @@
                     'contenteditable': false
                 });
         
-                var button = editor.dom.create('div', {
+                // ----- Edit Button -----
+                // code edit button
+                var editButton = editor.dom.create('div', {
                     'class': 'editicon',
                     'data-mce-bogus': '1',
                     'contenteditable': false
                 });
-                toolbar.appendChild(button);
+                toolbar.appendChild(editButton);
         
                 // display the settings dialog on click
-                editor.dom.bind(toolbar, 'mousedown', function (e) {
+                editor.dom.bind(editButton, 'mousedown', function (e) {
                     e.stopPropagation();
                     editAction();
                 });
+        
+                // ----- Delete Button -----
+        
+                // code delete button
+                var deleteButton = editor.dom.create('div', {
+                    'class': 'deleteicon',
+                    'data-mce-bogus': '1',
+                    'contenteditable': false
+                });
+                toolbar.appendChild(deleteButton);
+        
+                // display the settings dialog on click
+                editor.dom.bind(deleteButton, 'mousedown', function (e) {
+                    e.stopPropagation();
+                    console.log("DELETE NODE");
+        
+                    // show confirm dialog
+                    editor.windowManager.confirm('Do you want to delete the current codeblock?', function(e){
+                        e && boundingNode.remove();
+                    });
+                });
+        
+                // ----- Toolbar alignment -----
         
                 // add toolbar to editor area
                 editor.getBody().appendChild(toolbar);
@@ -174,14 +199,14 @@
                     {
                         type : 'checkbox',
                         name : 'linenums',
-                        label : 'Show Linenumbers',
+                        label : 'Line numbers',
                         checked: settings.linenumbers,
                         disabled: inlineMode
                     },
                     {
                         type : 'textbox',
                         name : 'highlight',
-                        label : 'Point out Lines (e.g. 1,2-6,9)',
+                        label : 'Point out lines (e.g. 1,2-6,9)',
                         multiline : false,
                         value: settings.highlight,
                         disabled: inlineMode,
@@ -190,7 +215,7 @@
                     {
                         type : 'textbox',
                         name : 'offset',
-                        label : 'Linennumber offset (e.g. 5)',
+                        label : 'Line number offset (e.g. 5)',
                         multiline : false,
                         value : settings.lineoffset,
                         disabled: inlineMode,
@@ -199,7 +224,7 @@
                     {
                         type : 'textbox',
                         name : 'group',
-                        label : 'Codegroup Identifier',
+                        label : 'Codegroup identifier',
                         multiline : false,
                         value : settings.group,
                         disabled: inlineMode,
@@ -208,7 +233,7 @@
                     {
                         type : 'textbox',
                         name : 'title',
-                        label : 'Codegroup Title',
+                        label : 'Codegroup title',
                         multiline : false,
                         value : settings.title,
                         disabled: inlineMode,
@@ -247,7 +272,7 @@
                     {
                         type: 'checkbox',
                         name: 'indentation',
-                        label: 'Left-Align Indentation',
+                        label: 'Left-align indentation',
                         checked: (_enlighterjs_config.config.indent > 0),
                         disabled: (_enlighterjs_config.config.indent < 0)
                     },

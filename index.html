@@ -1,8 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>EnlighterJS TinyMCE Demo</title>
+
+    <!-- just for styling !-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 
     <style type="text/css">
         textarea{
@@ -74,44 +79,51 @@
             "quicktagMode": "html",
             "languageShortcode": true,
             "shortcuts": true
+        },
+        "tinymce": {
+            "keyboardShortcuts": true
         }
     };
     /* ]]> */</script>
-    <script type='text/javascript' src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
     <script type="text/javascript">
+        function _domready(){
+            // initialize TinyMCE
+            tinymce.init({
 
-        // toggle Visual Editor
-        jQuery(function(jq){
-            jq('#toggle_editor').on('click', function(){
+                // paste plugin is required to strip pasted wysiwyg content (drop formats!)
+                plugins: 'paste',
+                external_plugins: {
+                    'enlighterjs': '/dist/enlighterjs.tinymce.min.js'
+                },
+
+                content_css: "/dist/enlighterjs.tinymce.min.css",
+
+                selector: '#editor1',
+
+                menubar: false,
+                height: 1200,
+
+                toolbar: 'styleselect | bold italic | link image | pastetext | EnlighterInsert EnlighterEdit'
+            });
+
+            // toggle Visual Editor
+            document.getElementById('toggle_editor').addEventListener('click', function(){
                 tinymce.EditorManager.execCommand('mceToggleEditor', true, 'editor1');
             })
-        });
-
-        // initialize TinyMCE
-        tinymce.init({
-
-            // paste plugin is required to strip pasted wysiwyg content (drop formats!)
-            plugins: 'paste',
-            external_plugins: {
-                'enlighterjs': '/dist/EnlighterJS.TinyMCE.js'
-            },
-
-            content_css: "/dist/EnlighterJS.TinyMCE.min.css",
-
-            selector: '#editor1',
-
-            menubar: false,
-            height: 1200,
-
-            toolbar: 'styleselect | bold italic | link image | pastetext | EnlighterInsert EnlighterEdit'
-        });
+        }
 
     </script>
 </head>
 <body>
 
-<button type="button" id="toggle_editor">Toggle Editor</button>
+    <div class="container">
+
+        <div class="py-5 text-center">
+            <h2>EnlighterJS TinyMCE Demo</h2>
+            <p class="lead">Official EnlighterJS Plugin for TinyMCE | <a href="https://github.com/EnlighterJS/Plugin.TinyMCE" target="_new">GitHub Repository</a></a></p>
+            <button type="button" id="toggle_editor" class="btn btn-primary btn-lg">Toggle Editor</button>
+        </div>
 
 <textarea id="editor1">Post and Edit Sourcecode in TinyMCE smoothly - Initially created as component of Enlighter Wordpress Plugin
 
@@ -145,5 +157,11 @@ var getCodeblockSettings = function () {
 
 </textarea>
 
+</div>
+<script type="text/javascript">
+if (typeof _domready === 'function'){
+    _domready.apply(window, [window, document]);
+}
+</script>
 </body>
 </html>

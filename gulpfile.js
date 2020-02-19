@@ -1,24 +1,21 @@
-var _package = require('./package.json');
+const _package = require('./package.json');
 
 // GULP plugins
-var gulp = require("gulp");
-var concat = require("gulp-concat-util");
-var uglify = require('gulp-uglify');
-var rename = require("gulp-rename");
-var wrapper = require('gulp-wrapper');
-var filter = require('gulp-filter');
-var replace = require('gulp-replace');
-var less = require('gulp-less');
-var minifyCSS = require('gulp-minify-css');
-var prettyError = require('gulp-prettyerror');
-var include = require("gulp-include");
-var path = require('path');
+const gulp = require("gulp");
+const concat = require("gulp-concat-util");
+const uglify = require('gulp-uglify');
+const rename = require("gulp-rename");
+const wrapper = require('gulp-wrapper');
+const filter = require('gulp-filter');
+const replace = require('gulp-replace');
+const less = require('gulp-less');
+const minifyCSS = require('gulp-minify-css');
+const prettyError = require('gulp-prettyerror');
+const include = require("gulp-include");
+const path = require('path');
 
 // license header prepended to builds
-var licenseHeader = '/*! EnlighterJS TinyMCE Plugin [[VERSION]] | Mozilla Public License 2.0 | https://tinymce.enlighterjs.org */\n';
-
-// default
-gulp.task('default', ['browser-js', 'less']);
+const licenseHeader = '/*! EnlighterJS TinyMCE Plugin [[VERSION]] | Mozilla Public License 2.0 | https://tinymce.enlighterjs.org */\n';
 
 // default release build
 gulp.task('browser-js', function(){
@@ -44,7 +41,10 @@ gulp.task('browser-js', function(){
 
         // create minified (compressed) version
         .pipe(uglify({
-            preserveComments: 'license'
+            compress: true,
+            output: {
+                comments: /^!/
+            }
         }))
         .pipe(rename({
             suffix: '.min'
@@ -72,3 +72,7 @@ gulp.task('less', function () {
 
         .pipe(gulp.dest('dist'));
 });
+
+
+// default
+gulp.task('default', gulp.series(['browser-js', 'less']));
