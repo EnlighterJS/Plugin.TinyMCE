@@ -33,14 +33,14 @@ var code_edit_dialog = function(settings, inlineMode){
             {
                 type : 'checkbox',
                 name : 'linenums',
-                label : 'Show Linenumbers',
+                label : 'Line numbers',
                 checked: settings.linenumbers,
                 disabled: inlineMode
             },
             {
                 type : 'textbox',
                 name : 'highlight',
-                label : 'Point out Lines (e.g. 1,2-6,9)',
+                label : 'Point out lines (e.g. 1,2-6,9)',
                 multiline : false,
                 value: settings.highlight,
                 disabled: inlineMode,
@@ -49,7 +49,7 @@ var code_edit_dialog = function(settings, inlineMode){
             {
                 type : 'textbox',
                 name : 'offset',
-                label : 'Linennumber offset (e.g. 5)',
+                label : 'Line number offset (e.g. 5)',
                 multiline : false,
                 value : settings.lineoffset,
                 disabled: inlineMode,
@@ -58,7 +58,7 @@ var code_edit_dialog = function(settings, inlineMode){
             {
                 type : 'textbox',
                 name : 'group',
-                label : 'Codegroup Identifier',
+                label : 'Codegroup identifier',
                 multiline : false,
                 value : settings.group,
                 disabled: inlineMode,
@@ -67,7 +67,7 @@ var code_edit_dialog = function(settings, inlineMode){
             {
                 type : 'textbox',
                 name : 'title',
-                label : 'Codegroup Title',
+                label : 'Codegroup title',
                 multiline : false,
                 value : settings.title,
                 disabled: inlineMode,

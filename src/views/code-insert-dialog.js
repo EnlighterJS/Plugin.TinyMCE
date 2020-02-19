@@ -28,7 +28,7 @@ var code_insert_dialog = function(_width, _height) {
             {
                 type: 'checkbox',
                 name: 'indentation',
-                label: 'Left-Align Indentation',
+                label: 'Left-align indentation',
                 checked: (_enlighterjs_config.config.indent > 0),
                 disabled: (_enlighterjs_config.config.indent < 0)
             },
