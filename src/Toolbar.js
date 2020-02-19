@@ -12,18 +12,43 @@ var Toolbar = {
             'contenteditable': false
         });
 
-        var button = editor.dom.create('div', {
+        // ----- Edit Button -----
+        // code edit button
+        var editButton = editor.dom.create('div', {
             'class': 'editicon',
             'data-mce-bogus': '1',
             'contenteditable': false
         });
-        toolbar.appendChild(button);
+        toolbar.appendChild(editButton);
 
         // display the settings dialog on click
-        editor.dom.bind(toolbar, 'mousedown', function (e) {
+        editor.dom.bind(editButton, 'mousedown', function (e) {
             e.stopPropagation();
             editAction();
         });
+
+        // ----- Delete Button -----
+
+        // code delete button
+        var deleteButton = editor.dom.create('div', {
+            'class': 'deleteicon',
+            'data-mce-bogus': '1',
+            'contenteditable': false
+        });
+        toolbar.appendChild(deleteButton);
+
+        // display the settings dialog on click
+        editor.dom.bind(deleteButton, 'mousedown', function (e) {
+            e.stopPropagation();
+            console.log("DELETE NODE");
+
+            // show confirm dialog
+            editor.windowManager.confirm('Do you want to delete the current codeblock?', function(e){
+                e && boundingNode.remove();
+            });
+        });
+
+        // ----- Toolbar alignment -----
 
         // add toolbar to editor area
         editor.getBody().appendChild(toolbar);

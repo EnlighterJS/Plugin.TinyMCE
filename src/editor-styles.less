@@ -62,4 +62,22 @@ pre.EnlighterJSRAW:before {
         background-repeat: no-repeat;
         background-image: data-uri('../assets/codeblock-edit-icon.png');
     }
+
+    .deleteicon{
+        display: block;
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        cursor: pointer;
+        top: 5px;
+        right: 15px;
+        border-radius: 0px;
+        color: #ffffff;
+        font-weight: bold;
+        text-align: center;
+
+        &::after{
+            content: 'x';
+        }
+    }
 }
