@@ -1,3 +1,7 @@
+### 5.0.1 ###
+
+* Bugfix: removed typos in code edit dialog - thanks to [ajtruckle on GitHub](https://github.com/EnlighterJS/Plugin.TinyMCE/issues/10)
+
 ### 5.0.0 ###
 
 * Added: development mode via koa/koa-static

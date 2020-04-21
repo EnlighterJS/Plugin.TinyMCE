@@ -33,25 +33,25 @@ var code_edit_dialog = function(settings, inlineMode){
             {
                 type : 'checkbox',
                 name : 'linenums',
-                label : 'Line numbers',
+                label : 'Show line numbers',
                 checked: settings.linenumbers,
                 disabled: inlineMode
             },
             {
                 type : 'textbox',
-                name : 'highlight',
-                label : 'Point out lines (e.g. 1,2-6,9)',
+                name : 'offset',
+                label : 'Line number offset',
                 multiline : false,
-                value: settings.highlight,
+                value : settings.lineoffset,
                 disabled: inlineMode,
                 style: 'direction: ltr; text-align: left'
             },
             {
                 type : 'textbox',
-                name : 'offset',
-                label : 'Line number offset (e.g. 5)',
+                name : 'highlight',
+                label : 'Highlight lines (e.g. 1,2-6,9)',
                 multiline : false,
-                value : settings.lineoffset,
+                value: settings.highlight,
                 disabled: inlineMode,
                 style: 'direction: ltr; text-align: left'
             },
